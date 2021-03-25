@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import * as Crypto from 'expo-crypto';
+//import * as Crypto from 'expo-crypto';
+import { JSHash, JSHmac, CONSTANTS } from "react-native-hash";
 
 
 export const ApiRegister = (props) => {
@@ -8,33 +9,42 @@ export const ApiRegister = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [isNotOk, setNotOk] = useState(true);
   const [data, setData] = useState([]);
+  const [hashPW, setHashPW] = useState(" ");
+
    
 
 
   useEffect(() => {
 
 
+    
 
     const apidata = require("./apiconnection.json");
     (async () => {
-      const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,props.route.params.UserDetail.userPassword);
-      console.log('Digest: ', digest);
+
+    const hpw = await JSHash(props.route.params.UserDetail.userPassword, CONSTANTS.HashAlgorithms.sha256)
+     setHashPW(hpw);
+     console.log(hpw);
+
+
+
+      //const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,props.route.params.UserDetail.userPassword);
+      //console.log('Digest: ', digest);
     
-    fetch(apidata.apiBaseUrl+'/user/register', {
+   const response = await fetch(apidata.apiBaseUrl+'/user/register', {
         method: 'POST',
 
         body: JSON.stringify({
             
             "username": props.route.params.UserDetail.userName,
-            "password": digest,
+            "password": hpw,
             "device_id": "<strfjfdlkjfdkjfjlkdlkjing>"
         })
       })
 
-      .then((response) => response.json())
-      .then((json) => checkData(json))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+      const json = await response.json();
+      checkData(json);
+      setLoading(false);
     })();
 
 /*

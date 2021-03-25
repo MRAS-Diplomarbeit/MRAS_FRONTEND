@@ -55,7 +55,6 @@ import styles from "../Components/styles";
 export default Login;
 
 const tryToLogin = (navigation, user) =>{
-  console.log(navigation)
  navigation.navigate("ApiLogin",{UserDetail: user});
 }
 

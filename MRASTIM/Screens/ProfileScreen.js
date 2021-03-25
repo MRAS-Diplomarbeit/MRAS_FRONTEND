@@ -4,7 +4,9 @@ import AppButton from '../Components/Buttons/AppButton';
 import styles from "../Components/styles";
 import { useState, useEffect } from 'react';
 import {useNavigation} from '@react-navigation/native';
-import * as Crypto from 'expo-crypto';
+//import * as Crypto from 'expo-crypto';
+import { JSHash, JSHmac, CONSTANTS } from "react-native-hash";
+
 
 
 
@@ -23,6 +25,10 @@ function ProfileScreen(props) {
   const [isNotOk, setNotOk] = useState(true);
   const [userPermissions, setUserPermissions] = useState();
   const [data, setData] = useState([]);
+  const [hashPW, setHashPW] = useState(" ");
+
+  
+
 
   useEffect(() => getUsers(),[]);
 
@@ -60,26 +66,40 @@ function ProfileScreen(props) {
 
     function changePasswordAPI(){
 
-      
+      var success = false;
       const adata = require("../services/apiconnection.json");
-      fetch(adata.apiBaseUrl+'/user/'+props.userInfo.user.id+'/password', {
+
+      (async () => {
+
+      const hpw = await JSHash(newuserpassword, CONSTANTS.HashAlgorithms.sha256);
+
+       const response = await fetch(adata.apiBaseUrl+'/user/'+props.userInfo.user.id+'/password', {
         method: "PATCH",
         headers: {
           'Authorization': "Bearer "+props.userInfo.access_token,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "password": newuserpassword
+          "password": hpw
         })
-      })
-      .then((response) => response.json())
-      .catch((error)=>console.log(error))
-      .then((json) => checkResponse(json))
+      });
+
+      try{
+         const json = await response.json();
+      }
+      catch(error){
+        success = true;
+
+      }
+     
+      checkResponse(success);
+      
+    })();
     
     }
 
-    function checkResponse(jsonObject){
-      if(jsonObject != null){
+    function checkResponse(success){
+      if(!success){
         setErrorMessage("Sorry, something went wrong")
       }else{
         setErrorMessage("Password changed successfully!")
@@ -109,16 +129,12 @@ function ProfileScreen(props) {
       }else if (newuserpassword!=confirmuserpassword){
         setErrorMessage("Please make sure, the new Password matches");
       }else{
-        
-
-        (async () => {
-          const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,newuserpassword);
-          console.log('Digest: ',digest);
+         
           console.log("changing password: "+ props.userInfo.access_token)
 
         changePasswordAPI();
 
-      })();
+      
       }
       
     }

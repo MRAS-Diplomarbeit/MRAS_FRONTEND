@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
-import * as Crypto from 'expo-crypto';
+//import * as Crypto from 'expo-crypto';
+import { JSHash, JSHmac, CONSTANTS } from "react-native-hash";
 
 
 export const ApiLogin = (props) => {
 
-    
-
-
   const [isLoading, setLoading] = useState(true);
   const [isNotOk, setNotOk] = useState(true);
   const [data, setData] = useState([]);
+  const [hashPW, setHashPW] = useState(" ");
 
    
 
@@ -19,13 +18,17 @@ export const ApiLogin = (props) => {
 
     const apidata = require("./apiconnection.json");
 
-      (async () => {
-        const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,props.route.params.UserDetail.password);
-        console.log('Digest: ', digest);
+    console.log(props.route.params.UserDetail.password);
+    
+    (async () => {
+      
+        const hpw = await JSHash(props.route.params.UserDetail.password, CONSTANTS.HashAlgorithms.sha256);
+      
+        setHashPW(hpw);
+        console.log(hpw);
+
   
-       console.log(props.route.params.UserDetail);
-  
-       await fetch(apidata.apiBaseUrl+'/user/login', {
+       const response = await fetch(apidata.apiBaseUrl+'/user/login', {
            method: 'POST',
            headers: {
                'Content-Type': 'application/json'
@@ -34,17 +37,19 @@ export const ApiLogin = (props) => {
            body: JSON.stringify({
   
                "username": props.route.params.UserDetail.userName,
-               "password": digest,
+               "password": hpw,
                "device_id": "<strfjfdlkjfdkjfjlkdlkjing>"
            })
        })
-        .then((response) => response.json())
-        .then((json) => checkData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
+       const json = await response.json();
+        checkData(json);
+        setLoading(false);
+       
+
+
+      })(); 
   
-  
-      })();
+      
 
   }, []);
 
@@ -64,10 +69,11 @@ export const ApiLogin = (props) => {
     {
         setNotOk(true);
         setData(jsonObject);
+        console.log(jsonObject);
     }else{
         setNotOk(false);
         setData(jsonObject);
-       // storeUserData(jsonObject);
+        console.log(jsonObject);
     }
 }
 
@@ -75,12 +81,5 @@ export const ApiLogin = (props) => {
 
 export default ApiLogin;
 
-const storeUserData = async (userObject) =>{
-  try {
-    const jsonValue = JSON.stringify(userObject)
-    await AsyncStorage.setItem('userKey', jsonValue);
-  } catch (e) {
-    console.log(e);
-  }
-} 
+
  

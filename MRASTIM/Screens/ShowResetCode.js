@@ -21,7 +21,7 @@ import colors from "../Components/colors";
             <Text style={{fontSize: 26, fontWeight: 'bold'}}>This is your Reset-Code:</Text>
           </View>
           <View style={{margin:16,backgroundColor: '#8C8C8C',borderRadius:5}}>
-            <Text style={{margin:16,fontSize: 20, fontWeight: 'bold', color:"white"}}>{xprops.route.params.userData.reset_code}</Text>
+            <Text style={{margin:16,fontSize: 20, fontWeight: 'bold', color:"white"}}>{props.route.params.userData.reset_code}</Text>
           </View>
           <View style={{margin:25,backgroundColor: '#CA002A',borderRadius:5}}>
             <Text style={{margin:16,fontSize: 16, fontWeight: 'bold', color:"white"}}>IMPORTANT: Please do not navigate away from this page unless you wrote your Reset-Code down. This code is essential for recovering your password! </Text>
