@@ -5,14 +5,14 @@ import styles from "../Components/styles";
 import AppButton from '../Components/Buttons/AppButton';
 import { useState } from 'react';
 import NButton from '../Components/NButton';
-import {AntDesign} from "@expo/vector-icons";
+import {AntDesign} from "@expo/vector-icons"; 
 import colors from "../Components/colors";
 
 const Register = ({navigation}) => {
 
-    const [userName,setUsername] = useState("userName");
-    const [userPassword,setuserPassword] = useState("userPassword");
-    const [userPasswordConf,setuserPasswordConf] = useState("userPasswordConf");
+    const [userName,setUsername] = useState("");
+    const [userPassword,setuserPassword] = useState("");
+    const [userPasswordConf,setuserPasswordConf] = useState("");
 
     const user={
       userName: userName,
@@ -62,5 +62,4 @@ const tryToRegister = (navigation, user) =>{
     navigation.navigate("ApiRegister", {UserDetail: user});
   }
 
-  //Check if username already exists!!!
 }

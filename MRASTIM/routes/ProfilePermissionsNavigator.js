@@ -1,7 +1,5 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
-
 import ProfileScreen from '../Screens/ProfileScreen';
 import SearchByNameOrList from '../Screens/SearchByNameOrList';
 import SearchByNameScreen from "../Screens/SearchByNameScreen";

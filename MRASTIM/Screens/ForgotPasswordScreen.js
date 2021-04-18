@@ -12,7 +12,7 @@ import styles from "../Components/styles";
     const [userName, setuserName] = useState("");
 
     const user={
-        userName: userName,
+        userName: userName, 
         passwordRecoveryKey: passwordRecoveryKey
       }
     

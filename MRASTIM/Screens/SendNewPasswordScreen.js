@@ -14,7 +14,7 @@ import styles from "../Components/styles";
         username: props.route.params.username
     }
     
-    return(
+    return( 
       <View style={styles.container}>
         <View style={{marginTop: 64}}>
             <SafeAreaView style={styles.container}>

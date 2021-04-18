@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 
 
-export const ApiForgotPassword = (props) => {
+export const ApiForgotPassword = (props) => { 
 
   const [isLoading, setLoading] = useState(true);
   const [isNotOk, setNotOk] = useState(true);

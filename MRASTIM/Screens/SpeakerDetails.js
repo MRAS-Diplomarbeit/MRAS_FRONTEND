@@ -190,7 +190,7 @@ function SpeakerDetails({navigation, route}) {
                     </Picker>
                 </View>
             </View>
-            <View style={{paddingTop: 50}}>
+            <View style={{paddingTop: 75}}>
                 <Text style={{fontWeight: 'bold'}}>{message}</Text>
                 <AppButton title={active ? "Stop Speaker" : "Use Speaker"} onPress={()=>useSpeaker()}/>
             </View>

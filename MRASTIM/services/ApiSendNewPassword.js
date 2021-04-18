@@ -14,7 +14,7 @@ export const ApiSendNewPassword = (props) => {
 
   function forgotPassword(){
     sendNewPassword()
-  }
+  } 
 
     function sendNewPassword(){
         fetch(apidata.apiBaseUrl+'/user/password/new/'+props.route.params.UserDetail.username, {

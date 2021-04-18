@@ -12,12 +12,9 @@ export const ApiRegister = (props) => {
   const [hashPW, setHashPW] = useState(" ");
 
    
-
+ 
 
   useEffect(() => {
-
-
-    
 
     const apidata = require("./apiconnection.json");
     (async () => {
@@ -26,11 +23,6 @@ export const ApiRegister = (props) => {
      setHashPW(hpw);
      console.log(hpw);
 
-
-
-      //const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,props.route.params.UserDetail.userPassword);
-      //console.log('Digest: ', digest);
-    
    const response = await fetch(apidata.apiBaseUrl+'/user/register', {
         method: 'POST',
 
@@ -46,34 +38,6 @@ export const ApiRegister = (props) => {
       checkData(json);
       setLoading(false);
     })();
-
-/*
-      (async () => {
-        const digest = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256,props.route.params.UserDetail.password);
-        //console.log('Digest: ', digest);
- 
-      // console.log(props.route.params.UserDetail);
-     fetch(apidata.apiBaseUrl+'/user/register', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
- 
-             "username": props.route.params.UserDetail.userName,
-             "password": digest,
-             "device_id": "<strfjfdlkjfdkjfjlkdlkjing>"
-         })
-       })
- 
-       .then((response) => response.json())
-       .then((json) => checkData(json))
-       .catch((error) => console.error(error))
-       .finally(() => setLoading(false));
- 
-     })();
-     */
-
 
   }, []);
   return (

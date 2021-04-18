@@ -83,7 +83,7 @@ function EditSpeaker({navigation, route}) {
                 )}
             
             </View>
-            <View style={{paddingTop: 50, alignItems: 'center'}}>
+            <View style={{paddingTop: 75, alignItems: 'center'}}>
                 <Text style={{fontSize: 18, fontWeight: "bold", color: colors.black, paddingBottom: 5}}>{message}</Text>
                 <AppButton title="Save Settings" onPress={()=>saveSettings()}/>
                 <View style={{paddingTop: 5}}/>

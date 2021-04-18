@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 //import * as Crypto from 'expo-crypto';
 import { JSHash, JSHmac, CONSTANTS } from "react-native-hash";
 
 
 export const ApiLogin = (props) => {
 
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true); 
   const [isNotOk, setNotOk] = useState(true);
   const [data, setData] = useState([]);
   const [hashPW, setHashPW] = useState(" ");
@@ -38,7 +38,7 @@ export const ApiLogin = (props) => {
   
                "username": props.route.params.UserDetail.userName,
                "password": hpw,
-               "device_id": "<strfjfdlkjfdkjfjlkdlkjing>"
+               "device_id": "not-Specified"
            })
        })
        const json = await response.json();
@@ -54,10 +54,8 @@ export const ApiLogin = (props) => {
   }, []);
 
   return (
-
-   
     <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <Text>Loading...</Text> : (isNotOk ? ( props.navigation.navigate("Login")) : (props.navigation.navigate("Home",{userData: data})))} 
+      {isLoading ? (<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}><Text>Loading...</Text></View>) : (isNotOk ? ( props.navigation.navigate("Login")) : (props.navigation.navigate("Home",{userData: data})))} 
     </View>
   );
 
@@ -70,6 +68,13 @@ export const ApiLogin = (props) => {
         setNotOk(true);
         setData(jsonObject);
         console.log(jsonObject);
+        Alert.alert(
+          "User not Found",
+          "Wrong Username or Password"
+        );
+
+
+
     }else{
         setNotOk(false);
         setData(jsonObject);

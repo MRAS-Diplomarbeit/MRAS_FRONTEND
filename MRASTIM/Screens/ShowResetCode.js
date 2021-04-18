@@ -9,7 +9,7 @@ import {AntDesign} from "@expo/vector-icons";
 import colors from "../Components/colors";
 
  const ShowResetCode = (props) => {
-
+ 
     return(
         <SafeAreaView style={styles.container}>
       <View style={{marginTop: 64}}>
